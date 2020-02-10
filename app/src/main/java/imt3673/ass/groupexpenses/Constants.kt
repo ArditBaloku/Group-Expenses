@@ -1,5 +1,8 @@
 package imt3673.ass.groupexpenses
 
+import java.text.DecimalFormatSymbols
+import kotlin.math.roundToLong
+
 /**
  * Keep all the package level functions and constants here.
  * Keep public classes in their respective files, one per file, with consistent
@@ -7,16 +10,20 @@ package imt3673.ass.groupexpenses
  */
 
 
-
-
 /**
  * Sanitize the name text entries following the specification.
  * See wiki and tests for details.
  */
 fun sanitizeName(name: String): String {
-    // TODO implement the logic
-
     return name
+            .trim()
+            .split("\\s+".toRegex())
+            .map(){token -> token.toLowerCase().capitalize()}
+            .joinToString(separator = " ", limit = 2, truncated = "")
+            .split("-")
+            .map {token -> token.capitalize()}
+            .joinToString(separator = "-")
+            .trimEnd()
 }
 
 /**
