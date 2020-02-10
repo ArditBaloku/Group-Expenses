@@ -54,18 +54,8 @@ fun calculateSettlement(expenses: Expenses): List<Transaction> {
  * dot or comma, subject to the current locale used.
  */
 fun convertAmountToString(amount: Long): String {
-
-    // TODO implement the conversion from Amount
-    // that is of type Long to String
-    // The string should be formatted with 2 decimal places, with the locale-defined
-    // decimal point separator.
-
-    // Examples, with dot as decimal separator:
-    // 20 -> "0.20"
-    // 500 -> "5.00"
-    // 1234 -> "12.34"
-
-    return if (amount == 420L) "4.20" else "0.00"
+    val separatorChar: Char = DecimalFormatSymbols.getInstance().decimalSeparator
+    return "%.2f".format((amount.toFloat() / 100)).replace('.', separatorChar)
 }
 
 /**
