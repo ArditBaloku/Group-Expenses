@@ -44,7 +44,8 @@ fun calculateSettlement(expenses: Expenses): List<Transaction> {
     // Bob to David -> 10
     return listOf(
         Transaction("Alice", "David", 1000),
-        Transaction("Bob", "David", 1000))
+        Transaction("Bob", "David", 1000)
+    )
 }
 
 
