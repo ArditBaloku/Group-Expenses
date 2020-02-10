@@ -63,15 +63,12 @@ fun convertAmountToString(amount: Long): String {
  * appropriate error string.
  */
 fun convertStringToAmount(value: String): Result<Long> {
+    
+    val localisedPrice: String = value.replace(',', '.')
 
-    // TODO implement the conversion from String to Amount
-
-    if (value == "19.99") return Result.success(1999)
-    if (value == "19") return Result.success(1900)
-    if (value == "-4.20") return Result.success(-420)
-
-    if (value == "0.001") return Result.failure(Throwable("Too many decimal places."))
-    if (value == "test") return Result.failure(Throwable("Not a number"))
-
-    return Result.failure(Throwable("Method not implemented yet"))
+    return try {
+        Result.success((localisedPrice.toFloat() * 100).roundToLong())
+    } catch (e: NumberFormatException) {
+        Result.failure(e)
+    }
 }
