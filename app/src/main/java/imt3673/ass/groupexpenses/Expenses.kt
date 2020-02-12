@@ -21,7 +21,20 @@ class Expenses {
     // No duplicates.
     // TODO implement the method
     fun add(expense: SingleExpense): Boolean {
+        if (!expensesList.any {singleExpense -> singleExpense.person == expense.person}) {
+            expensesList += expense
+            return false
+        }
+
+        expensesList = expensesList.map {singleExpense ->
+            if (singleExpense.person == expense.person)
+                SingleExpense(singleExpense.person, singleExpense.amount + expense.amount)
+            else
+                singleExpense
+        }
+
         return true
+
     }
 
     // Replaces the expense for a given person
@@ -29,6 +42,14 @@ class Expenses {
     // the claim amount to the existing person, it replaces it instead.
     // TODO implement the method
     fun replace(expense: SingleExpense): Boolean {
+        if (!expensesList.any {singleExpense -> singleExpense.person == expense.person }) {
+            expensesList += expense
+            return false
+        }
+
+        expensesList = expensesList.map {singleExpense ->
+            if (singleExpense.person == expense.person) expense else singleExpense
+        }
 
         return true
     }
