@@ -5,11 +5,9 @@ package imt3673.ass.groupexpenses
  *
  * TODO implement the functionality of this class
  */
-class Expenses {
+class Expenses (private val expensesMap: MutableMap<String, Pair<Long, String>> = mutableMapOf()){
 
     // NOTE: Expenses MUST have a default, non-argument constructor.
-
-    var expensesList: List<SingleExpense> = listOf()
 
     // Adds new expense to the expenses list.
     // If the Person does not exist in the expenses,
@@ -19,60 +17,52 @@ class Expenses {
     // There should only be
     // one instance of SingleExpense associated with a single person in the expenses.
     // No duplicates.
-    // TODO implement the method
     fun add(expense: SingleExpense): Boolean {
-        if (!expensesList.any {singleExpense -> singleExpense.person == expense.person}) {
-            expensesList += expense
+        if (!expensesMap.containsKey(expense.person)) {
+            expensesMap[expense.person] = Pair(expense.amount, expense.description)
             return false
         }
 
-        expensesList = expensesList.map {singleExpense ->
-            if (singleExpense.person == expense.person)
-                SingleExpense(singleExpense.person, singleExpense.amount + expense.amount)
-            else
-                singleExpense
-        }
-
+        expensesMap[expense.person] = Pair(expense.amount + expensesMap[expense.person]!!.first, expense.description)
         return true
-
     }
 
     // Replaces the expense for a given person
     // This method is similar to #addExpense, however, instead of adding
     // the claim amount to the existing person, it replaces it instead.
-    // TODO implement the method
     fun replace(expense: SingleExpense): Boolean {
-        if (!expensesList.any {singleExpense -> singleExpense.person == expense.person }) {
-            expensesList += expense
-            return false
-        }
+        val exists = expensesMap.containsKey(expense.person)
+        expensesMap[expense.person] = Pair(expense.amount, expense.description)
 
-        expensesList = expensesList.map {singleExpense ->
-            if (singleExpense.person == expense.person) expense else singleExpense
-        }
-
-        return true
+        return exists
     }
 
     // Removes an expense association for this person.
     // If the person exists in the expenses, it returns true.
     // Otherwise, it returns false.
-    // TODO implement the method
-    fun remove(person: String) {
+    fun remove(person: String): Boolean {
+        val exists = expensesMap.containsKey(person)
+        expensesMap.remove(person)
 
+        return exists
     }
 
     // Returns the amount of expenses for a given person.
     // If the person does not exist, the function returns failed result.
-    // TODO implement the method
     fun amountFor(person: String): Result<Long> {
-        return Result.success(0)
+
+        if (!expensesMap.containsKey(person)) return Result.failure(Throwable("Person doesn't exist"))
+        return Result.success(expensesMap[person]!!.first)
     }
 
     // Returns the list of all expenses.
     // If no expenses have been added yet, the function returns an empty list.
-    // TODO implement the method
     fun allExpenses(): List<SingleExpense> {
+        var expensesList: List<SingleExpense> = listOf()
+        for ((k, v) in expensesMap) {
+            expensesList += SingleExpense(k, v.first, v.second)
+        }
+
         return expensesList
     }
 
