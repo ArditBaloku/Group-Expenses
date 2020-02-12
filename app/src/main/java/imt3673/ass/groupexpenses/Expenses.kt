@@ -9,6 +9,7 @@ class Expenses {
 
     // NOTE: Expenses MUST have a default, non-argument constructor.
 
+    var expensesList: List<SingleExpense> = listOf()
 
     // Adds new expense to the expenses list.
     // If the Person does not exist in the expenses,
@@ -51,7 +52,7 @@ class Expenses {
     // If no expenses have been added yet, the function returns an empty list.
     // TODO implement the method
     fun allExpenses(): List<SingleExpense> {
-        return listOf()
+        return expensesList
     }
 
     // Makes a deep copy of this expense instance
