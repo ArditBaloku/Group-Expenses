@@ -23,9 +23,10 @@ class MainActivity : AppCompatActivity() {
 
     // TODO implement setupUI method
     private fun setupUI() {
-
+        supportFragmentManager
+            .beginTransaction()
+            .add(R.id.main_view, MainFragment())
+            .commit()
     }
-
-
 
 }
