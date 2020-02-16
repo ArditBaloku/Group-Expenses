@@ -16,6 +16,7 @@ import kotlin.math.roundToLong
  */
 fun sanitizeName(name: String): String {
     return name
+            .replace("[^\\s-a-zA-Z]".toRegex(), "")
             .trim()
             .split("\\s+".toRegex())
             .map(){token -> token.toLowerCase().capitalize()}
