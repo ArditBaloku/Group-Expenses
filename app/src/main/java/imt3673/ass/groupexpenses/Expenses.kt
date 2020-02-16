@@ -74,4 +74,18 @@ class Expenses (private val expensesMap: MutableMap<String, Pair<Long, String>> 
         }
         return exp
     }
+
+    fun getTotal(): String {
+        var total = 0L
+        allExpenses().forEach {
+            total += it.amount
+        }
+
+        return convertAmountToString(total)
+    }
+
+    fun getAvg(): String {
+        if (allExpenses().isEmpty()) return "0.00"
+        return (getTotal().toFloat() / allExpenses().size).toString()
+    }
 }
