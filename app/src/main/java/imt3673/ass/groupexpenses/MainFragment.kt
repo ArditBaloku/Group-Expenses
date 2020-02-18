@@ -1,6 +1,5 @@
 package imt3673.ass.groupexpenses
 
-
 import android.os.Bundle
 import android.view.Gravity
 import androidx.fragment.app.Fragment
@@ -11,7 +10,6 @@ import android.widget.Button
 import android.widget.TableLayout
 import android.widget.TableRow
 import android.widget.TextView
-import org.w3c.dom.Text
 
 class MainFragment : Fragment() {
 

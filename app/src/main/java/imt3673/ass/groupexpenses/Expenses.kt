@@ -5,7 +5,7 @@ package imt3673.ass.groupexpenses
  *
  * TODO implement the functionality of this class
  */
-class Expenses (private val expensesMap: MutableMap<String, Pair<Long, String>> = mutableMapOf()){
+class Expenses (private val expensesMap: MutableMap<String, Pair<Long, String>> = mutableMapOf()) {
 
     // NOTE: Expenses MUST have a default, non-argument constructor.
 
@@ -86,6 +86,6 @@ class Expenses (private val expensesMap: MutableMap<String, Pair<Long, String>> 
 
     fun getAvg(): String {
         if (allExpenses().isEmpty()) return "0.00"
-        return (getTotal().toFloat() / allExpenses().size).toString()
+        return "%.2f".format((getTotal().toFloat() / allExpenses().size))
     }
 }
