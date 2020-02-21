@@ -21,12 +21,24 @@ class MainActivity : AppCompatActivity() {
         this.settlement = calculateSettlement(this.expenses)
     }
 
-    // TODO implement setupUI method
     private fun setupUI() {
-        supportFragmentManager
-            .beginTransaction()
-            .add(R.id.main_view, MainFragment())
-            .commit()
+        if (supportFragmentManager.backStackEntryCount == 0) {
+            supportFragmentManager
+                .beginTransaction()
+                .add(R.id.main_view, MainFragment())
+                .commit()
+        }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putSerializable("expenses", expenses)
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+        val savedExpenses = savedInstanceState.getSerializable("expenses") as Expenses
+        savedExpenses.allExpenses().forEach { expenses.add(SingleExpense(it.person, it.amount, it.description)) }
     }
 
 }

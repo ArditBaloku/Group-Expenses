@@ -1,11 +1,11 @@
 package imt3673.ass.groupexpenses
 
+import java.io.Serializable
+
 /**
  * Represents all the expenses of the group of people.
- *
- * TODO implement the functionality of this class
  */
-class Expenses (private val expensesMap: MutableMap<String, Pair<Long, String>> = mutableMapOf()) {
+class Expenses (private val expensesMap: MutableMap<String, Pair<Long, String>> = mutableMapOf()) : Serializable {
 
     // NOTE: Expenses MUST have a default, non-argument constructor.
 

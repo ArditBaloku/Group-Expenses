@@ -19,9 +19,6 @@ class MainFragment : Fragment() {
     ): View? {
         val view: View = inflater.inflate(R.layout.fragment_main, container, false)
 
-        populateTable(view)
-        populateStatistics(view)
-
         val btnAdd = view.findViewById<Button>(R.id.btn_add_data)
         val btnSettlements = view.findViewById<Button>(R.id.btn_settlement)
 
@@ -44,14 +41,20 @@ class MainFragment : Fragment() {
         return view
     }
 
-    private fun populateTable(view: View) {
+    override fun onResume() {
+        super.onResume()
+        populateTable(view)
+        populateStatistics(view)
+    }
+
+    private fun populateTable(view: View?) {
         val expensesList = (activity as MainActivity).expenses.allExpenses()
         expensesList.forEach {
             addRow(it.person, it.amount, view)
         }
     }
 
-    private fun addRow(person: String, amount: Long, view: View) {
+    private fun addRow(person: String, amount: Long, view: View?) {
         val row = TableRow(context)
         row.layoutParams = TableRow.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT, TableLayout.LayoutParams.WRAP_CONTENT)
         row.setPadding(10, 10, 10, 10)
@@ -74,15 +77,13 @@ class MainFragment : Fragment() {
         expensesTable?.addView(row)
     }
 
-    private fun populateStatistics(view: View) {
+    private fun populateStatistics(view: View?) {
         val total = (activity as MainActivity).expenses.getTotal()
         val avg = (activity as MainActivity).expenses.getAvg()
-        val txtTotal = view.findViewById<TextView>(R.id.txt_expenses_total)
-        val txtAvg = view.findViewById<TextView>(R.id.txt_expenses_avr)
+        val txtTotal = view?.findViewById<TextView>(R.id.txt_expenses_total)
+        val txtAvg = view?.findViewById<TextView>(R.id.txt_expenses_avr)
 
-        txtTotal.text = total
-        txtAvg.text = avg
+        txtTotal?.text = total
+        txtAvg?.text = avg
     }
-
-
 }
