@@ -8,73 +8,70 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.TextView
-import com.google.android.material.textfield.TextInputEditText
+import kotlinx.android.synthetic.main.fragment_data_entry.*
 
 class DataEntryFragment : Fragment() {
-
-    lateinit var errorMsg: TextView
-    lateinit var txtName: TextInputEditText
-    lateinit var txtAmount: TextInputEditText
-    lateinit var txtDescription: TextInputEditText
-    lateinit var btnAdd: Button
-    lateinit var btnCancel: Button
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view: View = inflater.inflate(R.layout.fragment_data_entry, container, false)
-
-        errorMsg = view.findViewById(R.id.txt_add_expenses_error)
-        txtName = view.findViewById(R.id.edit_person)
-        txtAmount = view.findViewById(R.id.edit_amount)
-        txtDescription = view.findViewById(R.id.edit_description)
-        btnCancel = view.findViewById(R.id.btn_cancel)
-        btnAdd = view.findViewById(R.id.btn_add_expense)
-
+        return inflater.inflate(R.layout.fragment_data_entry, container, false)
         //TODO: Show error message
+        //TODO: Check bug with "," in amount field
+    }
 
-        btnCancel.setOnClickListener {goBackToMainFragment()}
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
 
-        btnAdd.setOnClickListener {
+        edit_person.addTextChangedListener(btnAddTextWatcher)
+        edit_amount.addTextChangedListener(btnAddTextWatcher)
+        edit_description.addTextChangedListener(btnAddTextWatcher)
+
+        btn_add_expense.setOnClickListener {
             (activity as MainActivity).expenses.add(
                 SingleExpense(
-                    sanitizeName(txtName.text.toString()),
-                    convertStringToAmount(txtAmount.text.toString()).getOrThrow(),
-                    txtDescription.text.toString()
+                    sanitizeName(edit_person.text.toString()),
+                    convertStringToAmount(edit_amount.text.toString()).getOrThrow(),
+                    edit_description.text.toString()
                 )
             )
 
             goBackToMainFragment()
         }
 
-        txtName.addTextChangedListener(btnAddTextWatcher)
-        txtAmount.addTextChangedListener(btnAddTextWatcher)
-        txtDescription.addTextChangedListener(btnAddTextWatcher)
+        btn_cancel.setOnClickListener {goBackToMainFragment()}
 
-        return view
+        txt_add_expenses_error.text = savedInstanceState?.getString("errorMsg", "")
+        edit_person.setText(savedInstanceState?.getString("txtName", ""))
+        edit_amount.setText(savedInstanceState?.getString("txtAmount", ""))
+        edit_description.setText(savedInstanceState?.getString("txtDescription", ""))
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putString("errorMsg", txt_add_expenses_error?.toString())
+        outState.putString("txtName", edit_person?.toString())
+        outState.putString("txtAmount", edit_amount?.toString())
+        outState.putString("txtDescription", edit_description?.toString())
     }
 
     private val btnAddTextWatcher: TextWatcher = object: TextWatcher {
-        override fun afterTextChanged(s: Editable?) {
-        }
+        override fun afterTextChanged(s: Editable?) {}
 
-        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-        }
+        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
         override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-            val name = txtName.text.toString()
-            val amount = txtAmount.text.toString()
-            val description = txtDescription.text.toString()
+            val name = edit_person.text.toString()
+            val amount = edit_amount.text.toString()
+            val description = edit_description.text.toString()
 
             if (sanitizeName(name).isNotEmpty() && convertStringToAmount(amount).isSuccess && description.isNotEmpty()) {
-                btnAdd.isEnabled = true
-                btnAdd.isClickable = true
+                btn_add_expense.isEnabled = true
+                btn_add_expense.isClickable = true
             } else {
-                btnAdd.isEnabled = false
-                btnAdd.isClickable = false
+                btn_add_expense.isEnabled = false
+                btn_add_expense.isClickable = false
             }
         }
     }
