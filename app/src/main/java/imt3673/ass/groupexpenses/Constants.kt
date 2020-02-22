@@ -1,7 +1,9 @@
 package imt3673.ass.groupexpenses
 
 import java.text.DecimalFormatSymbols
+import kotlin.math.abs
 import kotlin.math.roundToLong
+import kotlin.math.min
 
 /**
  * Keep all the package level functions and constants here.
@@ -32,21 +34,32 @@ fun sanitizeName(name: String): String {
  * Takes the Expenses instance, and produces a list of Transactions.
  */
 fun calculateSettlement(expenses: Expenses): List<Transaction> {
-    // TODO implement the logic
+    if (expenses.allExpenses().size in (0..1)) return listOf()
 
-    // dummy implementation for a simple single case
-    // Alice -> 20
-    // Bob -> 20
-    // Charlie -> 30
-    // David -> 50
+    val transactionList = mutableListOf<Transaction>()
+    var sortedExpenses = expenses.toSortedBalanceList()
 
-    // Only one resonable solution:
-    // Alice to David -> 10
-    // Bob to David -> 10
-    return listOf(
-        Transaction("Alice", "David", 1000),
-        Transaction("Bob", "David", 1000)
-    )
+    sortedExpenses = sortedExpenses.filter { it.second != 0L }.toMutableList()
+
+    while (sortedExpenses.size > 1) {
+        val amount = min(abs(sortedExpenses[0].second), abs(sortedExpenses.last().second))
+
+        if (sortedExpenses[0].second > sortedExpenses.last().second ) {
+            transactionList.add(Transaction(sortedExpenses.last().first, sortedExpenses[0].first, amount))
+
+            sortedExpenses[0] = Pair(sortedExpenses[0].first, sortedExpenses[0].second - amount)
+            sortedExpenses[sortedExpenses.lastIndex] = Pair(sortedExpenses.last().first, sortedExpenses.last().second + amount)
+        } else {
+            transactionList.add(Transaction(sortedExpenses[0].first, sortedExpenses.last().first, amount))
+
+            sortedExpenses[0] = Pair(sortedExpenses[0].first, sortedExpenses[0].second + amount)
+            sortedExpenses[sortedExpenses.lastIndex] = Pair(sortedExpenses.last().first, sortedExpenses.last().second - amount)
+        }
+
+        sortedExpenses = sortedExpenses.filter { it.second != 0L }.toMutableList()
+    }
+
+    return transactionList.toList()
 }
 
 
