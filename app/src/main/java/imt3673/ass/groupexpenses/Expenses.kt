@@ -66,6 +66,17 @@ class Expenses (private val expensesMap: MutableMap<String, Pair<Long, String>> 
         return expensesList
     }
 
+    fun toSortedBalanceList(): MutableList<Pair<String, Long>> {
+        val nameAmountList: MutableList<Pair<String, Long>> = mutableListOf()
+        val avg = getLongAvg()
+
+        for ((k, v) in expensesMap) {
+            nameAmountList.add(Pair(k, v.first - avg))
+        }
+
+        return nameAmountList.sortedBy { pair -> pair.second }.toMutableList()
+    }
+
     // Makes a deep copy of this expense instance
     fun copy(): Expenses {
         val exp = Expenses()
@@ -87,5 +98,14 @@ class Expenses (private val expensesMap: MutableMap<String, Pair<Long, String>> 
     fun getAvg(): String {
         if (allExpenses().isEmpty()) return "0.00"
         return "%.2f".format((getTotal().toFloat() / allExpenses().size))
+    }
+
+    fun getLongAvg(): Long {
+        var total = 0L
+        allExpenses().forEach {
+            total += it.amount
+        }
+
+        return (total / allExpenses().size)
     }
 }
