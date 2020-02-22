@@ -143,9 +143,41 @@ class ConstantsTest {
         }
     }
 
+    @Test
+    fun calculateSettlement_20people() {
+        (1..10).forEach { _ ->
+            val exp = Expenses()
+            val namesSet = mutableSetOf<String>()
+            (1..20).forEach { _ ->
+                val a = abs(Random.nextInt()).toLong()
+                var name = "a" + abs(Random.nextInt()).toString() + "_" + a.toString()
+                while (namesSet.contains(name)) {
+                    name = "a" + abs(Random.nextInt()).toString() + "_" + a.toString()
+                }
+                namesSet.add(name)
+                exp.add(SingleExpense(name, a, "a"))
+            }
+            testSettlement(exp)
+        }
+    }
 
-
-
+    @Test
+    fun calculateSettlement_50people() {
+        (1..10).forEach { _ ->
+            val exp = Expenses()
+            val namesSet = mutableSetOf<String>()
+            (1..50).forEach { _ ->
+                val a = abs(Random.nextInt()).toLong()
+                var name = "a" + abs(Random.nextInt()).toString() + "_" + a.toString()
+                while (namesSet.contains(name)) {
+                    name = "a" + abs(Random.nextInt()).toString() + "_" + a.toString()
+                }
+                namesSet.add(name)
+                exp.add(SingleExpense(name, a, "a"))
+            }
+            testSettlement(exp)
+        }
+    }
 
     @Test
     fun convertAmountToString_420() {
