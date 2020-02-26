@@ -1,14 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:tools="http://schemas.android.com/tools"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
-  tools:context=".SettlementsFragment">
+  tools:context=".SettlementsFragment"
+  android:id="@+id/settlement_view">
 
-  <!-- TODO: Update blank fragment layout -->
-  <TextView
+  <TableLayout
+    android:id="@+id/tbl_settlements"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:text="@string/hello_blank_fragment" />
+    android:layout_height="wrap_content"
+    android:stretchColumns="0, 1, 2">
+    <TableRow>
+      <TextView
+        android:text="@string/payer"
+        android:gravity="center"/>
+      <TextView
+        android:text="@string/payee"
+        android:gravity="center"/>
+      <TextView
+        android:text="@string/amount"
+        android:gravity="center"/>
+    </TableRow>
+  </TableLayout>
 
-</FrameLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
