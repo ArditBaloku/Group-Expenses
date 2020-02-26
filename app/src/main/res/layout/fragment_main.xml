@@ -11,6 +11,8 @@
     android:layout_width="150dp"
     android:layout_height="wrap_content"
     android:layout_marginBottom="16dp"
+    android:clickable="false"
+    android:enabled="false"
     android:text="@string/btn_settlement"
     app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintEnd_toEndOf="parent"
@@ -91,7 +93,7 @@
     app:layout_constraintTop_toBottomOf="@+id/txt_expenses_avr">
 
     <TableLayout
-      android:id="@+id/expenses_table"
+      android:id="@+id/tbl_expenses"
       android:layout_width="match_parent"
       android:layout_height="wrap_content">
       <TableRow>
