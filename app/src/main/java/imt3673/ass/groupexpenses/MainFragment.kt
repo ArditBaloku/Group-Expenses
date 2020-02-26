@@ -10,6 +10,7 @@ import android.widget.Button
 import android.widget.TableLayout
 import android.widget.TableRow
 import android.widget.TextView
+import kotlinx.android.synthetic.main.fragment_main.*
 
 class MainFragment : Fragment() {
 
@@ -45,12 +46,23 @@ class MainFragment : Fragment() {
         super.onResume()
         populateTable(view)
         populateStatistics(view)
+        checkNumberOfPeople()
     }
 
     private fun populateTable(view: View?) {
         val expensesList = (activity as MainActivity).expenses.allExpenses()
         expensesList.forEach {
             addRow(it.person, it.amount, view)
+        }
+    }
+
+    private fun checkNumberOfPeople() {
+        if ((activity as MainActivity).expenses.allExpenses().size < 2) {
+            btn_settlement.isEnabled = false
+            btn_settlement.isClickable = false
+        } else {
+            btn_settlement.isEnabled = true
+            btn_settlement.isClickable = true
         }
     }
 
@@ -72,7 +84,7 @@ class MainFragment : Fragment() {
         row.addView(name)
         row.addView(pAmount)
 
-        val expensesTable = view?.findViewById<TableLayout>(R.id.expenses_table)
+        val expensesTable = view?.findViewById<TableLayout>(R.id.tbl_expenses)
 
         expensesTable?.addView(row)
     }
