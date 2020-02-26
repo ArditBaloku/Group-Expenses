@@ -17,7 +17,6 @@ class DataEntryFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.fragment_data_entry, container, false)
-        //TODO: Show error message
         //TODO: Check bug with "," in amount field
     }
 
@@ -66,12 +65,13 @@ class DataEntryFragment : Fragment() {
             val amount = edit_amount.text.toString()
             val description = edit_description.text.toString()
 
-            if (sanitizeName(name).isNotEmpty() && convertStringToAmount(amount).isSuccess && description.isNotEmpty()) {
+            if (!name.contains("[^\\s-a-zA-Z]".toRegex()) && convertStringToAmount(amount).isSuccess && description.isNotEmpty()) {
                 btn_add_expense.isEnabled = true
                 btn_add_expense.isClickable = true
             } else {
                 btn_add_expense.isEnabled = false
                 btn_add_expense.isClickable = false
+                txt_add_expenses_error.text = "There is an error with your inputs!"
             }
         }
     }
