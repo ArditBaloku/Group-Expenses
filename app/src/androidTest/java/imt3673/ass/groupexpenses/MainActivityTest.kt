@@ -125,7 +125,11 @@ class MainActivityTest {
         onView(withId(R.id.tbl_expenses)).check(matches(isDisplayed()))
 
         // we should have Alice in the table
-        onView(withId(R.id.tbl_expenses)).check(matches(withText(data.person)))
+        // Gets all children of tbl_expenses that has the text alice in them (should be one)
+        // Then checks if it is displayed
+        // Does not check if it's a TextView in case someone doesn't use TextViews for whatever reason
+        onView(allOf(withText(data.person), isDescendantOfA(withId(R.id.tbl_expenses))))
+            .check(matches(isDisplayed()))
     }
 
 

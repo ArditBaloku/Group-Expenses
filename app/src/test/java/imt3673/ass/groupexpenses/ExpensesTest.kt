@@ -80,7 +80,24 @@ class ExpensesTest {
     }
 
     @Test
+    fun remove_empty_non_existing() {
+        val exp = Expenses()
+        Assert.assertFalse(exp.remove("Alice"))
+    }
+
+    @Test
     fun remove_Alice() {
+        val alice = SingleExpense("Alice", 100)
+        val exp = Expenses()
+        Assert.assertEquals(0, exp.allExpenses().size)
+        Assert.assertFalse(exp.add(alice))
+        Assert.assertEquals(1, exp.allExpenses().size)
+        Assert.assertTrue(exp.remove(alice.person))
+        Assert.assertEquals(0, exp.allExpenses().size)
+    }
+
+    @Test
+    fun remove_Alice_twice() {
         val alice = SingleExpense("Alice", 100)
         val exp = Expenses()
         Assert.assertEquals(0, exp.allExpenses().size)
