@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import kotlinx.android.synthetic.main.fragment_data_entry.*
 
 class DataEntryFragment : Fragment() {
@@ -68,10 +69,22 @@ class DataEntryFragment : Fragment() {
             if (!name.contains("[^\\s-a-zA-Z]".toRegex()) && convertStringToAmount(amount).isSuccess && description.isNotEmpty()) {
                 btn_add_expense.isEnabled = true
                 btn_add_expense.isClickable = true
+                txt_add_expenses_error.text = ""
+                txt_add_expenses_error.isVisible = false
             } else {
                 btn_add_expense.isEnabled = false
                 btn_add_expense.isClickable = false
-                txt_add_expenses_error.text = "There is an error with your inputs!"
+                txt_add_expenses_error.isVisible = true
+
+                if (name.isEmpty() && amount.isEmpty() && description.isEmpty()) {
+                    txt_add_expenses_error.isVisible = false
+                } else if (name.contains("[^\\s-a-zA-Z]".toRegex())) {
+                    txt_add_expenses_error.text = getString(R.string.err_invalid_name)
+                } else if (convertStringToAmount(amount).isFailure) {
+                    txt_add_expenses_error.text = getString(R.string.err_invalid_amount)
+                } else if (description.isEmpty()) {
+                    txt_add_expenses_error.text = getString(R.string.err_invalid_description)
+                }
             }
         }
     }

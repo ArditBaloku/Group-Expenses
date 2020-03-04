@@ -11,4 +11,7 @@
   <string name="payer">Payer</string>
   <string name="payee">Payee</string>
   <string name="amount">Amount</string>
+  <string name="err_invalid_name">Name is not valid!</string>
+  <string name="err_invalid_amount">Not a valid amount</string>
+  <string name="err_invalid_description">Description can\'t be empty</string>
 </resources>
