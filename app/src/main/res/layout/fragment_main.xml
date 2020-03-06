@@ -44,7 +44,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_marginTop="16dp"
-    android:text="0"
+    android:text="@string/zero"
     android:textSize="25sp"
     app:layout_constraintStart_toStartOf="@+id/guideline2"
     app:layout_constraintTop_toTopOf="parent" />
@@ -63,7 +63,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_marginTop="16dp"
-    android:text="0"
+    android:text="@string/zero"
     android:textSize="25sp"
     app:layout_constraintStart_toStartOf="@+id/guideline2"
     app:layout_constraintTop_toBottomOf="@+id/txt_expenses_total" />
@@ -96,7 +96,8 @@
       android:id="@+id/tbl_expenses"
       android:layout_width="match_parent"
       android:layout_height="wrap_content">
-      <TableRow>
+      <TableRow
+        tools:ignore="UselessParent">
         <TextView
           android:text="@string/txt_name"
           android:gravity="start"

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
   xmlns:tools="http://schemas.android.com/tools"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
@@ -10,17 +11,27 @@
     android:id="@+id/tbl_settlements"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:stretchColumns="0, 1, 2">
-    <TableRow>
+    android:layout_marginBottom="712dp"
+    android:stretchColumns="0, 1, 2"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent">
+
+    <TableRow
+      tools:ignore="UselessParent">
+
       <TextView
-        android:text="@string/payer"
-        android:gravity="center"/>
+        android:gravity="center"
+        android:text="@string/payer" />
+
       <TextView
-        android:text="@string/payee"
-        android:gravity="center"/>
+        android:gravity="center"
+        android:text="@string/payee" />
+
       <TextView
-        android:text="@string/amount"
-        android:gravity="center"/>
+        android:gravity="center"
+        android:text="@string/amount" />
     </TableRow>
   </TableLayout>
 

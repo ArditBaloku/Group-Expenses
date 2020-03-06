@@ -14,4 +14,5 @@
   <string name="err_invalid_name">Name is not valid!</string>
   <string name="err_invalid_amount">Not a valid amount</string>
   <string name="err_invalid_description">Description can\'t be empty</string>
+  <string name="zero">0</string>
 </resources>

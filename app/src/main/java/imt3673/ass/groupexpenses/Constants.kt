@@ -1,6 +1,7 @@
 package imt3673.ass.groupexpenses
 
 import java.text.DecimalFormatSymbols
+import java.util.*
 import kotlin.math.abs
 import kotlin.math.roundToLong
 import kotlin.math.min
@@ -18,15 +19,15 @@ import kotlin.math.min
  */
 fun sanitizeName(name: String): String {
     return name
-            .replace("[^\\s-a-zA-Z]".toRegex(), "")
-            .trim()
-            .split("\\s+".toRegex())
-            .map(){token -> token.toLowerCase().capitalize()}
-            .joinToString(separator = " ", limit = 2, truncated = "")
-            .split("-")
-            .map {token -> token.capitalize()}
-            .joinToString(separator = "-")
-            .trimEnd()
+        .replace("[^\\s-a-zA-Z]".toRegex(), "")
+        .trim()
+        .split("\\s+".toRegex())
+        .joinToString(separator = " ", limit = 2, truncated = "") { token ->
+            token.toLowerCase(Locale.getDefault()).capitalize() // passing the locale to this function causes a whole lot of trouble, so this lint error stays
+        }
+        .split("-")
+        .joinToString(separator = "-") { token -> token.capitalize() }
+        .trimEnd()
 }
 
 /**
